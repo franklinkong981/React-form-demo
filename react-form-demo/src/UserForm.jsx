@@ -1,19 +1,34 @@
 import React, {useState} from "react";
 
 const UserForm = () => {
-  const [username, setUsername] = useState("ChickenLady");
+  const initialFormData = {
+    username: "",
+    email: "",
+    password: ""
+  }
+  const [formData, setFormData] = useState(initialFormData);
+
   const handleChange = (e) => {
-    setUsername(e.target.value);
+    const {name, value} = e.target;
+    setFormData(data => ({
+      ...data,
+      [name]: value
+    }));
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`Created user, ${username}`);
-    setUsername("");
+    setFormData(initialFormData);
   };
+
   return (
     <form>
       <label htmlFor="username">Username: </label>
-      <input id="username" type="text" value={username} onChange={handleChange}/>
+      <input id="username" type="text" name="username" value={formData.username} onChange={handleChange}/>
+      <label htmlFor="email">Email</label>
+      <input id="email" type="email" name="email" value={formData.email} onChange={handleChange}/>
+      <label htmlFor="password">Password</label>
+      <input id="password" type="password" name="password" value={formData.password} onChange={handleChange}/>
       <button onClick={handleSubmit}>Add me to list!</button>
     </form>
   );
